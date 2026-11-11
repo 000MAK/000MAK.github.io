@@ -626,7 +626,7 @@ function frame(kind,t,out,dum){const o=AC.createOscillator(),g=AC.createGain();o
  g.gain.setValueAtTime(dum?.26:.1,t);g.gain.exponentialRampToValueAtTime(.0001,t+.18);o.connect(g).connect(out);o.start(t);o.stop(t+.2);
  const s=AC.createBufferSource(),fl=AC.createBiquadFilter(),g2=AC.createGain(),jn=kind==='doira';s.buffer=noise();fl.type='bandpass';fl.frequency.value=jn?6500:3000;fl.Q.value=jn?3:1.5;   // doira jingles / def skin slap
  g2.gain.setValueAtTime(dum?.03:.06,t);g2.gain.exponentialRampToValueAtTime(.0001,t+(jn?.13:.06));s.connect(fl).connect(g2).connect(out);s.start(t);s.stop(t+.14)}
-function startMusic(){if(MUS||muted||!musicOn||!AC||!MZ||document.hidden)return;const out=AC.createGain();out.gain.setValueAtTime(0,AC.currentTime);
+function startMusic(){return;/* tek müzik: MP3 çalar */if(MUS||muted||!musicOn||!AC||!MZ||document.hidden)return;const out=AC.createGain();out.gain.setValueAtTime(0,AC.currentTime);
  out.gain.linearRampToValueAtTime(MZ.vol,AC.currentTime+2.5);out.connect(AC.destination);const st=60/MZ.bpm/2;let step=0,next=AC.currentTime+.15;
  MUS={out,timer:setInterval(()=>{while(next<AC.currentTime+.3){const deg=MZ.prog[Math.floor(step/8)%MZ.prog.length],i=step%8,t=next+((i%2&&MZ.swing)?st*.33:0);
   if(i===0){note(hz(deg,-1),t,st*7.5,MZ.bass,.09,out);if(MZ.pad)[0,2,4].forEach(k=>note(hz(deg+k,0),t,st*8,MZ.pad,.022,out))}
@@ -1725,7 +1725,7 @@ boot();
  var mb2 = document.getElementById("music");
  if(mb2 && !mb2.dataset.uaBag){
   mb2.dataset.uaBag = "1";
-  mb2.addEventListener("click", function(e){ e.preventDefault(); e.stopPropagation(); degistir(); }, true);
+  mb2.addEventListener("click", function(e){ e.preventDefault(); e.stopImmediatePropagation(); degistir(); }, true);
  }
 })();
 </script></body>
